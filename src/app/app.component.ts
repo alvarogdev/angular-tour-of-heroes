@@ -1,16 +1,13 @@
+// Componente raíz de la aplicación Angular.
+// Aquí se definen los componentes principales que se mostrarán en la vista principal.
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { PersonasComponent } from './personas/personas.component';
-import { MessagesComponent } from './messages/messages.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, PersonasComponent, MessagesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  // Título que se muestra en la cabecera de la app.
   title = 'Tour de personas';
-
 }

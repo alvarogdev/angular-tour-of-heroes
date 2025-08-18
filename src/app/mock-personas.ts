@@ -1,5 +1,6 @@
 import { Persona } from './persona';
 
+// Datos simulados de personas para pruebas y desarrollo.
 export const PERSONAS: Persona[] = [
   { id: 1, nombre: 'Juan', apellido: 'Pérez' },
   { id: 2, nombre: 'Ana', apellido: 'García' },

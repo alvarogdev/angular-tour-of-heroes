@@ -1,12 +1,31 @@
+<!-- 
+  Si existe una persona seleccionada, se muestra el detalle.
+  El *ngIf evita que se muestre el bloque si persona es undefined o null.
+-->
 <div *ngIf="persona">
+  <!-- Título con el nombre y apellido de la persona en mayúsculas -->
   <h2>{{persona.nombre | uppercase}} {{persona.apellido | uppercase}} Detalles</h2>
+  
+  <!-- Muestra el ID de la persona -->
   <div><span>id: </span>{{persona.id}}</div>
+  
+  <!-- Campo editable para el nombre de la persona.
+       [(ngModel)] enlaza el input con la propiedad persona.nombre en el componente TypeScript.
+       Así, cualquier cambio en el input se refleja automáticamente en el objeto persona.
+  -->
   <div>
     <label for="persona-nombre">Nombre: </label>
     <input id="persona-nombre" [(ngModel)]="persona.nombre" placeholder="nombre">
   </div>
+  
+  <!-- Campo editable para el apellido de la persona.
+       También usa [(ngModel)] para el enlace bidireccional.
+  -->
   <div>
     <label for="persona-apellido">Apellido: </label>
     <input id="persona-apellido" [(ngModel)]="persona.apellido" placeholder="apellido">
   </div>
 </div>
+
+
+<button type="button" (click)="save()">save</button>

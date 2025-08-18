@@ -1,7 +1,29 @@
-<h2>Personas</h2>
-<ul class="personas">
-  <li *ngFor="let persona of personas" (click)="onSelect(persona)" [class.selected]="persona === selectedPersona">
-    <span class="badge">{{persona.id}}</span> {{persona.nombre}} {{persona.apellido}}
+<ul class="persona">
+  <li *ngFor="let persona of personas">
+    <a routerLink="/detail/{{persona.id}}">
+      <span class="badge">{{persona.id}}</span> {{persona.nombre}}
+    </a>
   </li>
 </ul>
-<app-persona-detail [persona]="selectedPersona"></app-persona-detail>
+
+
+<div>
+  <label for="new-persona-nombre">Nombre: </label>
+  <input id="new-persona-nombre" #personaNombre />
+  <label for="new-persona-apellido">Apellido: </label>
+  <input id="new-persona-apellido" #personaApellido />
+  <!-- (click) pasa ambos valores a add() y luego limpia los inputs -->
+  <button type="button" class="add-button" (click)="add(personaNombre.value, personaApellido.value); personaNombre.value=''; personaApellido.value=''">
+    Add persona
+  </button>
+</div>
+
+<ul class="personas">
+  <li *ngFor="let persona of personas">
+    <a routerLink="/detail/{{persona.id}}">
+      <span class="badge">{{persona.id}}</span> {{persona.nombre}}
+    </a>
+    <button type="button" class="delete" title="delete persona"
+      (click)="delete(persona)">x</button>
+  </li>
+</ul>

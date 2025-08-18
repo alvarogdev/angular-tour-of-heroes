@@ -1,37 +1,44 @@
-import { Component } from '@angular/core';
+// Componente que muestra la lista de personas y permite seleccionar una.
+// Utiliza servicios para obtener datos y mostrar mensajes.
+import { Component, OnInit } from '@angular/core';
 import { Persona } from '../persona';
-import { NgIf, UpperCasePipe, NgFor } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { PERSONAS } from '../mock-personas';
-import { PersonaDetailComponent } from '../persona-detail/persona-detail.component';
 import { PersonaService } from '../persona.service';
 import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-personas',
-  standalone: true,
-  imports: [UpperCasePipe, FormsModule, NgFor, NgIf, PersonaDetailComponent],
   templateUrl: './personas.component.html',
   styleUrl: './personas.component.css'
 })
-export class PersonasComponent {
-  selectedPersona?: Persona;
+
+export class PersonasComponent implements OnInit {
   personas: Persona[] = [];
 
-  constructor(private personaService: PersonaService, private messageService: MessageService) { }
+  constructor(private personaService: PersonaService) { }
 
   ngOnInit(): void {
     this.getPersonas();
   }
 
-  onSelect(persona: Persona): void {
-    this.selectedPersona = persona;
-    this.messageService.add(`PersonasComponent: Persona seleccionada id=${persona.id}`);
-  }
-
   getPersonas(): void {
-    this.personaService
-      .getPersonas()
+    this.personaService.getPersonas()
       .subscribe(personas => this.personas = personas);
   }
+
+ add(nombre: string, apellido: string): void {
+  nombre = nombre.trim();
+  apellido = apellido.trim();
+  if (!nombre || !apellido) { return; }
+  this.personaService.addPersona({ nombre, apellido } as Persona)
+    .subscribe(persona => {
+      this.personas.push(persona);
+    });
 }
+
+delete(persona: Persona): void {
+  this.personas = this.personas.filter(p => p !== persona);
+  this.personaService.deletePersona(persona.id).subscribe();
+}
+}
+
